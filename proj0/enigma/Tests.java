@@ -1,0 +1,34 @@
+package enigma;
+
+class Tests {
+	static final String[][] ROTOR_SPECS = {
+        { "I", "EKMFLGDQVZNTOWYHXUSPAIBRCJ", "UWYGADFPVZBECKMTHXSLRINQOJ",
+          "Q" },
+        { "II", "AJDKSIRUXBLHWTMCQGZNPYFVOE", "AJPCZWRLFBDKOTYUQGENHXMIVS",
+          "E" },
+        { "III", "BDFHJLCPRTXVZNYEIWGAKMUSQO", "TAGBPCSDQEUFVNZHYIXJWLRKOM",
+          "V" },
+        { "IV", "ESOVPZJAYQUIRHXLNFTGKDCMWB", "HZWVARTNLGUPXQCEJMBSKDYOIF",
+          "J" },
+        { "V", "VZBRGITYUPSDNHLXAWMJQOFECK", "QCYLXWENFTZOSMVJUDKGIARPHB",
+          "Z" },
+        { "VI", "JPGVOUMFYQBENHZRDKASXLICTW", "SKXQLHCNWARVGMEBJPTYFDZUIO",
+          "ZM" },
+        { "VII", "NZJHGRCXMYSWBOUFAIVLPEKQDT", "QMGYVPEDRCWTIANUXFKZOSLHJB",
+          "ZM" },
+        { "VIII", "FKQHTLXOCBJSPDZRAMEWNIUYGV", "QJINSAYDVKBFRUHMCPLEWZTGXO",
+          "ZM" },
+        { "BETA", "LEYJVCNIXWPBQMDRTAKZGFUHOS", "RLFOBVUXHDSANGYKMPZQWEJICT" },
+        { "GAMMA", "FSOKANUERHMBTIYCWLQPZXVGJD", "ELPZHAXJNYDRKFCTSIBMGWQVOU" },
+        { "B", "ENKQAUYWJICOPBLMDXZVFTHRGS" },
+        { "C", "RDOBJNTKVEHMLFCWZAXGYIPSUQ" }
+    };
+
+
+
+	public static void main(String[] args) {
+		String test = "I LOVE TO EAT PANCAKES AND wafuls.()*@%";
+		String pattern = "[a-z A-Z]*";
+		System.out.println(test.matches(pattern));
+}
+}

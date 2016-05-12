@@ -1,0 +1,16 @@
+# Test that tests all of the commands.
+java -ea jump61.Main
+None
+===#1===
+size 2
+manual blue
+start
+1 1
+2 2
+dump
+seed 1
+clear
+set 1 1 1 red
+dump
+quit
+===#2===

@@ -1,0 +1,100 @@
+package enigma;
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.IOException;
+
+/** Enigma simulator.
+ *  @author Charles Lee
+ */
+public final class Main {
+
+    /** Process a sequence of encryptions and decryptions, as
+     *  specified in the input from the standard input.  Print the
+     *  results on the standard output. Exits normally if there are
+     *  no errors in the input; otherwise with code 1. */
+    public static void main(String[] unused) {
+        Machine M;
+        BufferedReader input =
+            new BufferedReader(new InputStreamReader(System.in));
+
+
+        M = null;
+
+        try {
+            while (true) {
+                String line = input.readLine();
+                if (line == null) {
+                    break;
+                }
+                if (isConfigurationLine(line)) {
+                    M = new Machine();
+                    configure(M, line);
+                } else {
+                    printMessageLine(M.convert(standardize(line)));
+                }
+            }
+        } catch (IOException excp) {
+            System.err.printf("Input error: %s%n", excp.getMessage());
+            System.exit(1);
+        }
+    }
+
+    /** Return true iff LINE is an Enigma configuration line. */
+    private static boolean isConfigurationLine(String line) {
+        String rotors = "I II III IV V VI VII VIII";
+        String[] line2 = line.split("\\s+");
+        String[] four = line2[5].split("");
+        if (line2[0].equals("*")) {
+            if (line2[1].equals("B") || line2[1].equals("C")) {
+                if (line2[2].equals("DELTA") || line2[2].equals("GAMMA")) {
+                    if (rotors.contains(line2[3])) {
+                        if (rotors.contains(line2[4])
+                            && !line2[3].equals(line2[4])) {
+                            if (rotors.contains(line2[5])
+                                && !line2[5].equals(line2[4])
+                                && !line2[3].equals(line2[5])) {
+                                if (four.length == 4) {
+                                    return true;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            return false;
+        }
+    }
+
+    /** Configure M according to the specification given on CONFIG,
+     *  which must have the format specified in the assignment. */
+    private static void configure(Machine M, String config) {
+        String[] line = config.split("\\s+");
+        Rotor[] rotors = { new Reflector(line[1], 0),
+            new FixedRotor(line[2], 0),
+            new Rotor(line[3], 0),
+            new Rotor(line[4], 0),
+            new Rotor(line[5], 0) };
+    }
+
+    /** Return the result of converting LINE to all upper case,
+     *  removing all blanks and tabs.  It is an error if LINE contains
+     *  characters other than letters and blanks. */
+    private static String standardize(String line) {
+        String delim = "[]+";
+        String capital = line.toUpperCase();
+        String line2 = capital.replaceAll("\\W", "");
+        return line2;
+
+    }
+
+    /** Print MSG in groups of five (except that the last group may
+     *  have fewer letters). */
+    private static void printMessageLine(String msg) {
+        String[] line = msg.split("(?<=\\G.....)");
+        for (int i = 0; i < line.length; i++) {
+            System.out.println(line[i]);
+        }
+    }
+}
+
